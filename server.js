@@ -1,4 +1,3 @@
-
 import express from 'express';
 
 //Initialize Express app-
@@ -10,7 +9,6 @@ app.use(express.json());
 //Set the port-
 const PORT = 5000;
 
-
 let recipe = [
     {
         "id": 1,
@@ -18,7 +16,6 @@ let recipe = [
         "ingredients": ["spaghetti", "green vegetables", "tomato sauce", "onion", "garlic"],
         "cuisine": "Italian",
         "cookTime": "20mins",
-        
     },
     {
         "id": 2,
@@ -27,7 +24,6 @@ let recipe = [
         "cuisine": "Indian",
         "cookTime": "30mins"
    },
-
    {
         "id": 3,
         "name": "Chole Bhature",
@@ -35,14 +31,20 @@ let recipe = [
         "cuisine": "Indian",
         "cookTime": "45mins"
    },
-
    {
         "id": 4,
         "name": "Pav Bhaji",
         "ingredients": ["potatoes", "mixed vegetables", "tomato", "onion", "pav"],
         "cuisine": "Indian",
         "cookTime": "30mins"
-   }
+   },
+   {
+        "id": 5,
+        "name": "Tacos",
+        "ingredients": ["tortillas", "meat", "cheese", "lettuce", "tomato"],
+        "cuisine": "Mexican",
+        "cookTime": "20mins"
+   },
 ]
 
 
@@ -50,6 +52,7 @@ let recipe = [
 app.get("/recipes", (req, res) => {
   res.json(recipe);
 });
+
 
 // Route to get a specific recipe by ID
 app.get("/recipes/:id", (req, res) => {
@@ -71,6 +74,7 @@ app.post("/addrecipe", (req, res) => {
     res.status(201).json(addReceipe);
 });
 
+
 // Route to update an existing recipe by ID.
 app.put("/recipes/:id", (req, res) => {
   const id = parseInt(req.params.id);
@@ -88,7 +92,9 @@ app.put("/recipes/:id", (req, res) => {
 // Route to delete a recipe by ID.
 app.delete("/recipes/:id", (req, res) => {
   const id = parseInt(req.params.id);   
-  const recipeIndex = recipe.filter(r => r.id === id);
+  const recipes = recipe.filter(r => r.id !==id);
+  res.json({message:"Recipe deleted successfully", recipe: recipes});
+});
   
 
 //start the express server
